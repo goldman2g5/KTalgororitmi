@@ -11,14 +11,15 @@ namespace ConsoleApp3
         static void Main(string[] args)
         {
             var Ls = new LinkedList<int>(1);
+            Console.WriteLine(Ls.Count);
+            
             Ls.Add(2);
             Ls.Add(3);
 
             Console.WriteLine(Ls);
+            
 
-            Ls.RemoveAt(1);
-
-            Console.WriteLine(Ls);
+            Console.WriteLine(Ls.First());
 
             Console.ReadLine();
 

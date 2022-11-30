@@ -5,42 +5,33 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using ConsoleApp3.LinkedList;
 
 namespace ConsoleApp3
 {
-    internal class Node<T>
-    {
-        public T Value { get; set; }
-        public Node<T> Next { get; set; }
 
-        public Node(T value)
-        {
-            Value = value;
-        }
-
-        public Node()
-        {
-        }
-    }
-    
     internal class LinkedList<T>
     {
-        public Node<T> Node { get; set; }
+        private Node<T> Node { get; set; }
+        public int Count { get; set; }
 
 
         public LinkedList(Node<T> node)
         {
             Node = node;
+            Count = 1;
         }
 
         public LinkedList(T data)
         {
             Node = new Node<T>(data);
+            Count = 1;
         }
 
         public LinkedList()
         {
             Node = new Node<T>();
+            Count = 1;
         }
 
         public void Add(T data)
@@ -58,6 +49,7 @@ namespace ConsoleApp3
                     current = current.Next;
                 }
                 current.Next = node;
+                Count++;
             }
         }
 
@@ -82,6 +74,7 @@ namespace ConsoleApp3
                         return;
                     }
                     current = current.Next;
+                    Count--;
                 }
             }
         }
@@ -92,6 +85,7 @@ namespace ConsoleApp3
             {
                 return;
             }
+
             if (index == 0)
             {
                 Node = Node.Next;
@@ -103,7 +97,50 @@ namespace ConsoleApp3
                 {
                     current = current.Next;
                 }
+
                 current.Next = current.Next.Next;
+                Count--;
+            }
+        }
+
+        public Node<T> First()
+        {
+            return Node;
+        }
+
+        public Node<T> Last()
+        {
+            var current = Node;
+            while (current.Next != null)
+            {
+                current = current.Next;
+            }
+
+            current = new Node<T>(current.Value);
+            current.Next = First();
+            return current;
+        }
+
+
+
+        public Node<T> this[int index]
+        {
+            get
+            {
+                if (index == 0)
+                    index = 1;
+                if (index >= Count)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                var current = Node;
+                for (int i = 0; i < index; i++)
+                {
+                    current = current.Next;
+                }
+
+                return current;
             }
         }
 
