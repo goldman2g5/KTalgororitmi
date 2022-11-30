@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Xml.Schema;
 using ConsoleApp3.LinkedList;
 
 namespace ConsoleApp3
 {
 
-    internal class LinkedList<T>
+    internal class LinkedList<T> : IEnumerable<T>, IList<T>
     {
         private Node<T> Node { get; set; }
+
         public int Count { get; set; }
+        public bool IsReadOnly { get; }
 
 
         public LinkedList(Node<T> node)
@@ -37,45 +42,66 @@ namespace ConsoleApp3
         public void Add(T data)
         {
             var node = new Node<T>(data);
-            if (Node == null)
+            Node ??= node;
+
+            Node.Value ??= data; 
+            var current = Node;
+            while (current.Next != null)
             {
-                Node = node;
+                current = current.Next;
             }
-            else
-            {
-                var current = Node;
-                while (current.Next != null)
-                {
-                    current = current.Next;
-                }
-                current.Next = node;
-                Count++;
-            }
+            current.Next = node;
+            Count++;
         }
 
-        public void Remove(T node)
+        public void Clear()
         {
-            if (Node == null)
+            Node = new Node<T>();
+        }
+
+        public bool Contains(T item) => this.Any(x => x.Equals(item));
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IndexOf(T item)
+        {
+            var current = Node;
+            var index = 0;
+            while (current != null)
             {
-                return;
+                if (current.Value.Equals(item))
+                {
+                    return index;
+                }
+                current = current.Next;
+                index++;
             }
-            if (Node.Value.Equals(node))
+            return -1;
+        }
+
+        public void Insert(int index, T item)
+        {
+            if (index == 0)
             {
-                Node = Node.Next;
+                var node = new Node<T>(item);
+                node.Next = Node;
+                Node = node;
+                Count++;
             }
             else
             {
                 var current = Node;
-                while (current.Next != null)
+                for (int i = 0; i < index - 1; i++)
                 {
-                    if (current.Next.Value.Equals(node))
-                    {
-                        current.Next = current.Next.Next;
-                        return;
-                    }
                     current = current.Next;
-                    Count--;
                 }
+                var node = new Node<T>(item);
+                node.Next = current.Next;
+                current.Next = node;
+                Count++;
             }
         }
 
@@ -101,6 +127,64 @@ namespace ConsoleApp3
                 current.Next = current.Next.Next;
                 Count--;
             }
+        }
+
+        bool ICollection<T>.Remove(T item)
+        {
+            if (Node == null)
+            {
+                return false;
+            }
+            if (Node.Value.Equals(item))
+            {
+                Node = Node.Next;
+                return false;
+            }
+            var current = Node;
+            while (current.Next != null)
+            {
+                if (current.Next.Value.Equals(item))
+                {
+                    current.Next = current.Next.Next;
+                    return true;
+                }
+                current = current.Next;
+                Count--;
+            }
+
+            return true;
+        }
+
+        bool Remove(T item)
+        {
+            if (Node == null)
+            {
+                return false;
+            }
+            if (Node.Value.Equals(item))
+            {
+                Node = Node.Next;
+                return false;
+            }
+            var current = Node;
+            while (current.Next != null)
+            {
+                if (current.Next.Value.Equals(item))
+                {
+                    current.Next = current.Next.Next;
+                    return true;
+                }
+                current = current.Next;
+                Count--;
+            }
+
+            return true;
+        }
+
+        T IList<T>.this[int index]
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         public Node<T> First()
@@ -144,6 +228,28 @@ namespace ConsoleApp3
             }
         }
 
+        public static int GetLength(Node<T> head)
+        {
+            int count = 0;
+            while (head != null)
+            {
+                count++;
+                head = head.Next;
+            }
+            return count;
+        }
+
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = Node;
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
 
         public override string ToString()
         {
@@ -156,6 +262,11 @@ namespace ConsoleApp3
                 current = current.Next;
             }
             return sb.ToString();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
