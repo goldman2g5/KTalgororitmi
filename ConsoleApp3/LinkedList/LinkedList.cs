@@ -13,12 +13,11 @@ using ConsoleApp3.LinkedList;
 namespace ConsoleApp3
 {
 
-    internal class LinkedList<T> : IEnumerable<T>, IList<T>
+    internal class LinkedList<T> : IEnumerable<T>
     {
         private Node<T> Node { get; set; }
 
         public int Count { get; set; }
-        public bool IsReadOnly { get; }
 
 
         public LinkedList(Node<T> node)
@@ -44,26 +43,17 @@ namespace ConsoleApp3
             var node = new Node<T>(data);
             Node ??= node;
 
-            Node.Value ??= data; 
+            Node.Value ??= data;
             var current = Node;
             while (current.Next != null)
             {
+                if (current.IsLast)
+                    break;
                 current = current.Next;
             }
             current.Next = node;
             Count++;
-        }
-
-        public void Clear()
-        {
-            Node = new Node<T>();
-        }
-
-        public bool Contains(T item) => this.Any(x => x.Equals(item));
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
+            LoopLast();
         }
 
         public int IndexOf(T item)
@@ -76,9 +66,12 @@ namespace ConsoleApp3
                 {
                     return index;
                 }
+                if (current.IsLast)
+                    break;
                 current = current.Next;
                 index++;
             }
+            LoopLast();
             return -1;
         }
 
@@ -103,33 +96,33 @@ namespace ConsoleApp3
                 current.Next = node;
                 Count++;
             }
+            LoopLast();
         }
 
-        public void RemoveAt(int index)
-        {
-            if (Node == null)
-            {
-                return;
-            }
 
+        public bool RemoveAt(int index)
+        {
             if (index == 0)
             {
                 Node = Node.Next;
-            }
-            else
-            {
-                var current = Node;
-                for (int i = 0; i < index - 1; i++)
-                {
-                    current = current.Next;
-                }
-
-                current.Next = current.Next.Next;
                 Count--;
+                LoopLast();
+                return true;
             }
+
+            var current = Node;
+            for (int i = 0; i < index; i++)
+            {
+                current = current.Next;
+            }
+            current.Next = current.Next.Next;
+            Count--;
+            LoopLast();
+            return true;
         }
 
-        bool ICollection<T>.Remove(T item)
+
+        public bool Remove(T item)
         {
             if (Node == null)
             {
@@ -145,46 +138,17 @@ namespace ConsoleApp3
             {
                 if (current.Next.Value.Equals(item))
                 {
+                    if (current.IsLast)
+                        break;
                     current.Next = current.Next.Next;
                     return true;
                 }
                 current = current.Next;
                 Count--;
             }
+            LoopLast();
 
             return true;
-        }
-
-        bool Remove(T item)
-        {
-            if (Node == null)
-            {
-                return false;
-            }
-            if (Node.Value.Equals(item))
-            {
-                Node = Node.Next;
-                return false;
-            }
-            var current = Node;
-            while (current.Next != null)
-            {
-                if (current.Next.Value.Equals(item))
-                {
-                    current.Next = current.Next.Next;
-                    return true;
-                }
-                current = current.Next;
-                Count--;
-            }
-
-            return true;
-        }
-
-        T IList<T>.this[int index]
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
         }
 
         public Node<T> First()
@@ -198,6 +162,8 @@ namespace ConsoleApp3
             while (current.Next != null)
             {
                 current = current.Next;
+                if (current.IsLast)
+                    break;
             }
 
             current = new Node<T>(current.Value);
@@ -205,6 +171,21 @@ namespace ConsoleApp3
             return current;
         }
 
+
+        private void LoopLast()
+        {
+            var current = Node;
+            while (current.Next != null)
+            {
+                current.IsLast = false;
+                if (current.IsLast)
+                    break;
+                current = current.Next;
+            }
+
+            current.Next = First();
+            current.IsLast = true;
+        }
 
 
         public Node<T> this[int index]
@@ -228,16 +209,6 @@ namespace ConsoleApp3
             }
         }
 
-        public static int GetLength(Node<T> head)
-        {
-            int count = 0;
-            while (head != null)
-            {
-                count++;
-                head = head.Next;
-            }
-            return count;
-        }
 
 
         public IEnumerator<T> GetEnumerator()
@@ -246,6 +217,8 @@ namespace ConsoleApp3
             while (current != null)
             {
                 yield return current.Value;
+                if (current.IsLast)
+                    break;
                 current = current.Next;
             }
         }
@@ -259,6 +232,8 @@ namespace ConsoleApp3
             {
                 sb.Append(current.Value);
                 sb.Append(" ");
+                if (current.IsLast)
+                    break;
                 current = current.Next;
             }
             return sb.ToString();

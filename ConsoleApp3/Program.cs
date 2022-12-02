@@ -16,9 +16,14 @@ namespace ConsoleApp3
             Ls.Add(3);
 
             Console.WriteLine(Ls);
+            Console.WriteLine($"Len: {Ls[0].GetLength()}");
+            Console.WriteLine();
+            
+            Ls.RemoveAt(2);
 
-            Ls.Select(x => x * 2);
             Console.WriteLine(Ls);
+            Console.WriteLine($"Len: {Ls[0].GetLength()}");
+            Console.WriteLine();
 
             Console.ReadLine();
 
