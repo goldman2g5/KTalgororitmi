@@ -31,15 +31,18 @@ namespace ConsoleApp3
             //Console.ReadLine();
             #endregion
 
-            var sequence = new Sequence<string>();
+            var sequence = new Sequence<int>();
 
-            sequence.Build(3);
-            sequence.Add("1");
+            sequence.Build(5);
+            sequence.Add(1);
 
             Console.WriteLine(sequence);
 
-            Set<string> set = sequence;
+            Set<int> set = sequence;
+            Console.WriteLine(set);
             Console.WriteLine(set.Min());
+            Console.WriteLine(set.Max());
+            Console.WriteLine(string.Join(", ", set.Where(x => x > 1)));
             Console.ReadKey();
         }
     }

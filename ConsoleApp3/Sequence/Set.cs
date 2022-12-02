@@ -20,11 +20,6 @@ namespace ConsoleApp3.Sequence
 
         private readonly List<T> _items = new List<T>();
 
-        public bool IsReadOnly => false;
-        public int Count => _items.Count;
-
-
-
         public void Build(int size)
         {
             for (int i = 0; i < size; i++)
