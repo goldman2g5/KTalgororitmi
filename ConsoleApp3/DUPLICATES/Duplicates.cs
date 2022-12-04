@@ -60,5 +60,16 @@ namespace ConsoleApp3.DUPLICATES
             return false;
         }
 
+        public static bool DebilTime(params int[] args)
+        {
+            int bebra = 0;
+            foreach (var _ in Enumerable.Range(0, args.ToList().Max() + args.Length))
+            {
+                bebra++;
+            }
+
+
+            return LinearTime(args);
+        }
     }
 }
