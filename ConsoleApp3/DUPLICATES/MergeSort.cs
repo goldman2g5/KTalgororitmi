@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp3
+namespace ConsoleApp3.DUPLICATES
 {
-    internal class Tree
+    public class MergeSort
     {
-        
-
     }
 }

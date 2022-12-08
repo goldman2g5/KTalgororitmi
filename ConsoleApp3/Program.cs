@@ -9,6 +9,7 @@ using ConsoleApp3.DUPLICATES;
 using ConsoleApp3.Hashtable;
 using ConsoleApp3.Sequence;
 using ConsoleApp3.Sequense;
+using ConsoleApp3.Tree;
 
 namespace ConsoleApp3
 {
@@ -43,8 +44,6 @@ namespace ConsoleApp3
 
             //Console.ReadLine();
             #endregion
-
-
 
             #region Sequence/Set
             //var sequence = new Sequence<int>();
@@ -84,188 +83,227 @@ namespace ConsoleApp3
             //    Console.WriteLine($"{fn.Method.Name} - {sw.ElapsedMilliseconds}");
             //}
             //Console.ReadKey();
-
             #endregion
 
             #region Sort
-            //List<Character> ls = new List<Character>()
-            //{
-            //    new Character(1, "Amber", 100, 300),
-            //    new Character(2, "Lisa", 45, 100),
-            //    new Character(3, "Venti", 300, 450),
-            //    new Character(-1, "Raiden", 60, 100),
-            //    new Character(-2, "Miko", 50, 70),
-            //};
-
-            //List<Character> SortByWinCount(List<Character> ls)
-            //{
-            //    int left = 0;
-            //    int right = ls.Count - 1;
-            //    int i = left, j = right;
-            //    Character pivot = ls[right / 2];
-
-            //    while (i <= j)
-            //    {
-            //        while (ls[i].WinCount > pivot.WinCount)
-            //        {
-            //            i++;
-            //        }
-
-            //        while (ls[j].WinCount < pivot.WinCount)
-            //        {
-            //            j--;
-            //        }
-
-            //        if (i > j) continue;
-
-            //        (ls[i], ls[j]) = (ls[j], ls[i]);
-
-            //        i++;
-            //        j--;
-            //    };
-
-            //    return ls;
-            //}
-
-            //List<Character> SortByName(List<Character> ls)
-            //{
-            //    int left = 0;
-            //    int right = ls.Count - 1;
-            //    int i = left, j = right;
-            //    Character pivot = ls[right / 2];
-
-            //    while (i <= j)
-            //    {
-            //        while (ls[i].Name.CompareTo(pivot.Name) > 0)
-            //        {
-            //            i++;
-            //        }
-
-            //        while (ls[j].Name.CompareTo(pivot.Name) < 0)
-            //        {
-            //            j--;
-            //        }
-
-            //        if (i > j) continue;
-            //        // Swap
-            //        (ls[i], ls[j]) = (ls[j], ls[i]);
-
-            //        i++;
-            //        j--;
-            //    };
-
-            //    return ls;
-            //}
-
-            //List<Character> SortById(List<Character> ls)
-            //{
-            //    int left = 0;
-            //    int right = ls.Count - 1;
-            //    int i = left, j = right;
-            //    Character pivot = ls[right / 2];
-
-            //    while (i <= j)
-            //    {
-            //        while (ls[i].Id > pivot.Id)
-            //        {
-            //            i++;
-            //        }
-
-            //        while (ls[j].Id < pivot.Id)
-            //        {
-            //            j--;
-            //        }
-
-            //        if (i > j) continue;
-
-            //        (ls[i], ls[j]) = (ls[j], ls[i]);
-
-            //        i++;
-            //        j--;
-            //    };
-
-            //    return ls;
-            //}
-
-            //List<Character> SortByWinRatio(List<Character> ls)
-            //{
-            //    int left = 0;
-            //    int right = ls.Count - 1;
-            //    int i = left, j = right;
-            //    Character pivot = ls[right / 2];
-
-            //    while (i <= j)
-            //    {
-            //        while (ls[i].MatchCount / ls[i].WinCount > pivot.MatchCount / pivot.WinCount)
-            //        {
-            //            i++;
-            //        }
-
-            //        while (ls[i].MatchCount / ls[i].WinCount < pivot.MatchCount / pivot.WinCount)
-            //        {
-            //            j--;
-            //        }
-
-            //        if (i > j) continue;
-
-            //        (ls[i], ls[j]) = (ls[j], ls[i]);
-
-            //        i++;
-            //        j--;
-            //    }
-
-            //    return ls;
-            //}
-
-            //foreach (var item in SortByWinCount(ls))
-            //{
-            //    Console.WriteLine($"{item.Name} - {item.WinCount} wins");
-            //}
-
-
-            //foreach (var item in SortByName(ls))
-            //{
-            //    Console.WriteLine($"{item.Name}");
-            //}
-
-
-            //foreach (var item in SortByWinRatio(ls))
-            //{
-            //    Console.WriteLine($"{item.Name} - {Math.Round(item.MatchCount / item.WinCount, 2)} win ratio");
-            //}
-
-            //foreach (var item in SortById(ls))
-            //{
-            //    Console.WriteLine($"{item.Name} - id {item.Id}");
-            //}
-
-
-
-            //Console.ReadKey();
-            #endregion
-
-
-            List<HashTable> tables = new List<HashTable>()
+            List<Character> characters = new List<Character>()
             {
-                new OpenHashTable(),
-                new ClosedHashTable()
+                new Character(1, "Amber", 100, 300),
+                new Character(3, "Lisa", 45, 100),
+                new Character(2, "Venti", 300, 450),
+                new Character(-1, "Raiden", 60, 100),
+                new Character(-2, "Miko", 50, 70),
             };
 
-            foreach (var i in tables)
+            List<Character> SortByWinCount(List<Character> array, int leftIndex, int rightIndex)
             {
-                foreach (var j in new List<int>() { 67, 13, 49, 24, 40, 33, 58 })
+                var i = leftIndex;
+                var j = rightIndex;
+                var pivot = array[leftIndex];
+                while (i <= j)
                 {
-                    i.Add(j);
+                    while (array[i].WinCount < pivot.WinCount)
+                    {
+                        i++;
+                    }
+
+                    while (array[j].WinCount > pivot.WinCount)
+                    {
+                        j--;
+                    }
+                    if (i <= j)
+                    {
+                        var temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                        i++;
+                        j--;
+                    }
                 }
+
+                if (leftIndex < j)
+                    SortByWinCount(array, leftIndex, j);
+                if (i < rightIndex)
+                    SortByWinCount(array, i, rightIndex);
+                return array;
             }
 
-
-            foreach (var i in tables)
+            List<Character> SortByName(List<Character> array, int leftIndex, int rightIndex)
             {
-                i.Print();
-                Console.WriteLine();
+                var i = leftIndex;
+                var j = rightIndex;
+                var pivot = array[leftIndex];
+                while (i <= j)
+                {
+                    
+                    while (string.Compare(array[i].Name, pivot.Name) > 0)
+                    {
+                        i++;
+                    }
+
+                    while (string.Compare(array[j].Name, pivot.Name) < 0)
+                    {
+                        j--;
+                    }
+                    if (i <= j)
+                    {
+                        var temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                        i++;
+                        j--;
+                    }
+                }
+
+                if (leftIndex < j)
+                    SortByName(array, leftIndex, j);
+                if (i < rightIndex)
+                    SortByName(array, i, rightIndex);
+                return array;
             }
+
+            List<Character> SortById(List<Character> array, int leftIndex, int rightIndex)
+            {
+                var i = leftIndex;
+                var j = rightIndex;
+                var pivot = array[leftIndex];
+                while (i <= j)
+                {
+                    while (array[i].Id < pivot.Id)
+                    {
+                        i++;
+                    }
+
+                    while (array[j].Id > pivot.Id)
+                    {
+                        j--;
+                    }
+                    if (i <= j)
+                    {
+                        var temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                        i++;
+                        j--;
+                    }
+                }
+
+                if (leftIndex < j)
+                    SortById(array, leftIndex, j);
+                if (i < rightIndex)
+                    SortById(array, i, rightIndex);
+                return array;
+            }
+
+            List<Character> SortByWinRatio(List<Character> array, int leftIndex, int rightIndex)
+            {
+                var i = leftIndex;
+                var j = rightIndex;
+                var pivot = array[leftIndex];
+                while (i <= j)
+                {
+                    while (array[i].GetWinRate() < pivot.GetWinRate())
+                    {
+                        i++;
+                    }
+
+                    while (array[j].GetWinRate() > pivot.GetWinRate())
+                    {
+                        j--;
+                    }
+                    if (i <= j)
+                    {
+                        var temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                        i++;
+                        j--;
+                    }
+                }
+
+                if (leftIndex < j)
+                    SortByWinRatio(array, leftIndex, j);
+                if (i < rightIndex)
+                    SortByWinRatio(array, i, rightIndex);
+                return array;
+            }
+
+            Console.WriteLine("Before sorting:");
+            foreach (var i in characters)
+            {
+                Console.WriteLine(i.Name);
+            }
+            Console.WriteLine("\nby win count");
+            
+            foreach (var item in SortByWinCount(characters, 0, characters.Count - 1))
+            {
+                Console.WriteLine($"{item.Name} - {item.WinCount} wins");
+            }
+
+            Console.WriteLine("\nby name");
+            
+            foreach (var item in SortByName(characters, 0, characters.Count - 1))
+            {
+                Console.WriteLine($"{item.Name}");
+            }
+
+            Console.WriteLine("\nby win rate");
+
+            foreach (var item in SortByWinRatio(characters, 0, characters.Count - 1))
+            {
+                Console.WriteLine($"{item.Name} - {item.GetWinRate()} win rate");
+            }
+
+            Console.WriteLine("\n by id");
+
+            foreach (var item in SortById(characters, 0, characters.Count - 1))
+            {
+                Console.WriteLine($"{item.Name} - {item.Id}");
+            }
+
             Console.ReadKey();
+
+            //Console.ReadKey();
+
+            #endregion
+
+            #region HashTable
+
+            //List<HashTable> tables = new List<HashTable>()
+            //{
+            //    new OpenHashTable(),
+            //    new ClosedHashTable()
+            //};
+
+            //foreach (var i in tables)
+            //{
+            //    foreach (var j in new List<int>() { 67, 13, 49, 24, 40, 33, 58 })
+            //    {
+            //        i.Add(j);
+            //    }
+            //}
+
+
+            //foreach (var i in tables)
+            //{
+            //    i.Print();
+            //    Console.WriteLine();
+            //}
+            //Console.ReadKey();
+
+            #endregion
+
+            #region Tree
+
+            //BinaryTree<string> tree = new BinaryTree<string>();
+            //tree.Add("bebra");
+            //tree.Add("brusko");
+            //tree.Print(tree.root);
+
+            //Console.ReadKey();
+
+            #endregion
+
         }
     }
 }

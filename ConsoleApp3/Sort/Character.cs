@@ -20,5 +20,7 @@ namespace ConsoleApp3
             WinCount = winCount;
             MatchCount = matchCount;
         }
+
+        public double GetWinRate() => Math.Round(MatchCount / WinCount, 2);
     }
 }

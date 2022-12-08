@@ -15,12 +15,12 @@ namespace ConsoleApp3
 
     internal class LinkedList<T> : IEnumerable<T>
     {
-        private Node<T> Node { get; set; }
+        private LinkedLsNode<T> Node { get; set; }
 
         public int Count { get; set; }
 
 
-        public LinkedList(Node<T> node)
+        public LinkedList(LinkedLsNode<T> node)
         {
             Node = node;
             Count = 1;
@@ -28,19 +28,19 @@ namespace ConsoleApp3
 
         public LinkedList(T data)
         {
-            Node = new Node<T>(data);
+            Node = new LinkedLsNode<T>(data);
             Count = 1;
         }
 
         public LinkedList()
         {
-            Node = new Node<T>();
+            Node = new LinkedLsNode<T>();
             Count = 1;
         }
 
         public void Add(T data)
         {
-            var node = new Node<T>(data);
+            var node = new LinkedLsNode<T>(data);
             Node ??= node;
 
             Node.Value ??= data;
@@ -79,7 +79,7 @@ namespace ConsoleApp3
         {
             if (index == 0)
             {
-                var node = new Node<T>(item);
+                var node = new LinkedLsNode<T>(item);
                 node.Next = Node;
                 Node = node;
                 Count++;
@@ -91,7 +91,7 @@ namespace ConsoleApp3
                 {
                     current = current.Next;
                 }
-                var node = new Node<T>(item);
+                var node = new LinkedLsNode<T>(item);
                 node.Next = current.Next;
                 current.Next = node;
                 Count++;
@@ -151,12 +151,12 @@ namespace ConsoleApp3
             return true;
         }
 
-        public Node<T> First()
+        public LinkedLsNode<T> First()
         {
             return Node;
         }
 
-        public Node<T> Last()
+        public LinkedLsNode<T> Last()
         {
             var current = Node;
             while (current.Next != null)
@@ -166,7 +166,7 @@ namespace ConsoleApp3
                     break;
             }
 
-            current = new Node<T>(current.Value);
+            current = new LinkedLsNode<T>(current.Value);
             current.Next = First();
             return current;
         }
@@ -188,7 +188,7 @@ namespace ConsoleApp3
         }
 
 
-        public Node<T> this[int index]
+        public LinkedLsNode<T> this[int index]
         {
             get
             {

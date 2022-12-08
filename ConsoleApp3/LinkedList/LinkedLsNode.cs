@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp3.LinkedList
 {
-    internal class Node<T>
+    internal class LinkedLsNode<T>
     {
         public T Value { get; set; }
-        public Node<T> Next { get; set; }
+        public LinkedLsNode<T> Next { get; set; }
 
         public bool IsLast;
 
-        public Node(T value)
+        public LinkedLsNode(T value)
         {
             Value = value;
         }
 
-        public Node(T value, Node<T> next)
+        public LinkedLsNode(T value, LinkedLsNode<T> next)
         {
             Value = value;
             Next = next;
         }
 
-        public Node()
+        public LinkedLsNode()
         {
         }
         public int GetLength()

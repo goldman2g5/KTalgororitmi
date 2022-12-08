@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DUPLICATES\MergeSort.cs" />
     <Compile Include="Hashtable\ClosedHashTable.cs" />
     <Compile Include="Hashtable\OpenHashTable.cs" />
     <Compile Include="Sort\Character.cs" />
@@ -52,12 +53,13 @@
     <Compile Include="Hashtable\HashTable.cs" />
     <Compile Include="Interfaces\ISequence.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
-    <Compile Include="LinkedList\Node.cs" />
+    <Compile Include="LinkedList\LinkedLsNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence\Sequence.cs" />
     <Compile Include="Sequence\Set.cs" />
-    <Compile Include="Tree\Tree.cs" />
+    <Compile Include="Tree\BinaryTree.cs" />
+    <Compile Include="Tree\TreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
