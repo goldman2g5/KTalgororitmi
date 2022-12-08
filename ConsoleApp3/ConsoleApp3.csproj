@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="10fns\Huinya.cs" />
     <Compile Include="DUPLICATES\MergeSort.cs" />
     <Compile Include="Hashtable\ClosedHashTable.cs" />
     <Compile Include="Hashtable\OpenHashTable.cs" />

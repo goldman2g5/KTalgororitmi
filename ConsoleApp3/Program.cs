@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp3._10fns;
 using ConsoleApp3.DUPLICATES;
 using ConsoleApp3.Hashtable;
 using ConsoleApp3.Sequence;
@@ -86,182 +87,180 @@ namespace ConsoleApp3
             #endregion
 
             #region Sort
-            List<Character> characters = new List<Character>()
-            {
-                new Character(1, "Amber", 100, 300),
-                new Character(3, "Lisa", 45, 100),
-                new Character(2, "Venti", 300, 450),
-                new Character(-1, "Raiden", 60, 100),
-                new Character(-2, "Miko", 50, 70),
-            };
+            //List<Character> characters = new List<Character>()
+            //{
+            //    new Character(1, "Amber", 100, 300),
+            //    new Character(3, "Lisa", 45, 100),
+            //    new Character(2, "Venti", 300, 450),
+            //    new Character(-1, "Raiden", 60, 100),
+            //    new Character(-2, "Miko", 50, 70),
+            //};
 
-            List<Character> SortByWinCount(List<Character> array, int leftIndex, int rightIndex)
-            {
-                var i = leftIndex;
-                var j = rightIndex;
-                var pivot = array[leftIndex];
-                while (i <= j)
-                {
-                    while (array[i].WinCount < pivot.WinCount)
-                    {
-                        i++;
-                    }
+            //List<Character> SortByWinCount(List<Character> array, int leftIndex, int rightIndex)
+            //{
+            //    var i = leftIndex;
+            //    var j = rightIndex;
+            //    var pivot = array[leftIndex];
+            //    while (i <= j)
+            //    {
+            //        while (array[i].WinCount < pivot.WinCount)
+            //        {
+            //            i++;
+            //        }
 
-                    while (array[j].WinCount > pivot.WinCount)
-                    {
-                        j--;
-                    }
-                    if (i <= j)
-                    {
-                        var temp = array[i];
-                        array[i] = array[j];
-                        array[j] = temp;
-                        i++;
-                        j--;
-                    }
-                }
+            //        while (array[j].WinCount > pivot.WinCount)
+            //        {
+            //            j--;
+            //        }
+            //        if (i <= j)
+            //        {
+            //            var temp = array[i];
+            //            array[i] = array[j];
+            //            array[j] = temp;
+            //            i++;
+            //            j--;
+            //        }
+            //    }
 
-                if (leftIndex < j)
-                    SortByWinCount(array, leftIndex, j);
-                if (i < rightIndex)
-                    SortByWinCount(array, i, rightIndex);
-                return array;
-            }
+            //    if (leftIndex < j)
+            //        SortByWinCount(array, leftIndex, j);
+            //    if (i < rightIndex)
+            //        SortByWinCount(array, i, rightIndex);
+            //    return array;
+            //}
 
-            List<Character> SortByName(List<Character> array, int leftIndex, int rightIndex)
-            {
-                var i = leftIndex;
-                var j = rightIndex;
-                var pivot = array[leftIndex];
-                while (i <= j)
-                {
-                    
-                    while (string.Compare(array[i].Name, pivot.Name) > 0)
-                    {
-                        i++;
-                    }
+            //List<Character> SortByName(List<Character> array, int leftIndex, int rightIndex)
+            //{
+            //    var i = leftIndex;
+            //    var j = rightIndex;
+            //    var pivot = array[leftIndex];
+            //    while (i <= j)
+            //    {
 
-                    while (string.Compare(array[j].Name, pivot.Name) < 0)
-                    {
-                        j--;
-                    }
-                    if (i <= j)
-                    {
-                        var temp = array[i];
-                        array[i] = array[j];
-                        array[j] = temp;
-                        i++;
-                        j--;
-                    }
-                }
+            //        while (string.Compare(array[i].Name, pivot.Name) > 0)
+            //        {
+            //            i++;
+            //        }
 
-                if (leftIndex < j)
-                    SortByName(array, leftIndex, j);
-                if (i < rightIndex)
-                    SortByName(array, i, rightIndex);
-                return array;
-            }
+            //        while (string.Compare(array[j].Name, pivot.Name) < 0)
+            //        {
+            //            j--;
+            //        }
+            //        if (i <= j)
+            //        {
+            //            var temp = array[i];
+            //            array[i] = array[j];
+            //            array[j] = temp;
+            //            i++;
+            //            j--;
+            //        }
+            //    }
 
-            List<Character> SortById(List<Character> array, int leftIndex, int rightIndex)
-            {
-                var i = leftIndex;
-                var j = rightIndex;
-                var pivot = array[leftIndex];
-                while (i <= j)
-                {
-                    while (array[i].Id < pivot.Id)
-                    {
-                        i++;
-                    }
+            //    if (leftIndex < j)
+            //        SortByName(array, leftIndex, j);
+            //    if (i < rightIndex)
+            //        SortByName(array, i, rightIndex);
+            //    return array;
+            //}
 
-                    while (array[j].Id > pivot.Id)
-                    {
-                        j--;
-                    }
-                    if (i <= j)
-                    {
-                        var temp = array[i];
-                        array[i] = array[j];
-                        array[j] = temp;
-                        i++;
-                        j--;
-                    }
-                }
+            //List<Character> SortById(List<Character> array, int leftIndex, int rightIndex)
+            //{
+            //    var i = leftIndex;
+            //    var j = rightIndex;
+            //    var pivot = array[leftIndex];
+            //    while (i <= j)
+            //    {
+            //        while (array[i].Id < pivot.Id)
+            //        {
+            //            i++;
+            //        }
 
-                if (leftIndex < j)
-                    SortById(array, leftIndex, j);
-                if (i < rightIndex)
-                    SortById(array, i, rightIndex);
-                return array;
-            }
+            //        while (array[j].Id > pivot.Id)
+            //        {
+            //            j--;
+            //        }
+            //        if (i <= j)
+            //        {
+            //            var temp = array[i];
+            //            array[i] = array[j];
+            //            array[j] = temp;
+            //            i++;
+            //            j--;
+            //        }
+            //    }
 
-            List<Character> SortByWinRatio(List<Character> array, int leftIndex, int rightIndex)
-            {
-                var i = leftIndex;
-                var j = rightIndex;
-                var pivot = array[leftIndex];
-                while (i <= j)
-                {
-                    while (array[i].GetWinRate() < pivot.GetWinRate())
-                    {
-                        i++;
-                    }
+            //    if (leftIndex < j)
+            //        SortById(array, leftIndex, j);
+            //    if (i < rightIndex)
+            //        SortById(array, i, rightIndex);
+            //    return array;
+            //}
 
-                    while (array[j].GetWinRate() > pivot.GetWinRate())
-                    {
-                        j--;
-                    }
-                    if (i <= j)
-                    {
-                        var temp = array[i];
-                        array[i] = array[j];
-                        array[j] = temp;
-                        i++;
-                        j--;
-                    }
-                }
+            //List<Character> SortByWinRatio(List<Character> array, int leftIndex, int rightIndex)
+            //{
+            //    var i = leftIndex;
+            //    var j = rightIndex;
+            //    var pivot = array[leftIndex];
+            //    while (i <= j)
+            //    {
+            //        while (array[i].GetWinRate() < pivot.GetWinRate())
+            //        {
+            //            i++;
+            //        }
 
-                if (leftIndex < j)
-                    SortByWinRatio(array, leftIndex, j);
-                if (i < rightIndex)
-                    SortByWinRatio(array, i, rightIndex);
-                return array;
-            }
+            //        while (array[j].GetWinRate() > pivot.GetWinRate())
+            //        {
+            //            j--;
+            //        }
+            //        if (i <= j)
+            //        {
+            //            var temp = array[i];
+            //            array[i] = array[j];
+            //            array[j] = temp;
+            //            i++;
+            //            j--;
+            //        }
+            //    }
 
-            Console.WriteLine("Before sorting:");
-            foreach (var i in characters)
-            {
-                Console.WriteLine(i.Name);
-            }
-            Console.WriteLine("\nby win count");
-            
-            foreach (var item in SortByWinCount(characters, 0, characters.Count - 1))
-            {
-                Console.WriteLine($"{item.Name} - {item.WinCount} wins");
-            }
+            //    if (leftIndex < j)
+            //        SortByWinRatio(array, leftIndex, j);
+            //    if (i < rightIndex)
+            //        SortByWinRatio(array, i, rightIndex);
+            //    return array;
+            //}
 
-            Console.WriteLine("\nby name");
-            
-            foreach (var item in SortByName(characters, 0, characters.Count - 1))
-            {
-                Console.WriteLine($"{item.Name}");
-            }
+            //Console.WriteLine("Before sorting:");
+            //foreach (var i in characters)
+            //{
+            //    Console.WriteLine(i.Name);
+            //}
+            //Console.WriteLine("\nby win count");
 
-            Console.WriteLine("\nby win rate");
+            //foreach (var item in SortByWinCount(characters, 0, characters.Count - 1))
+            //{
+            //    Console.WriteLine($"{item.Name} - {item.WinCount} wins");
+            //}
 
-            foreach (var item in SortByWinRatio(characters, 0, characters.Count - 1))
-            {
-                Console.WriteLine($"{item.Name} - {item.GetWinRate()} win rate");
-            }
+            //Console.WriteLine("\nby name");
 
-            Console.WriteLine("\n by id");
+            //foreach (var item in SortByName(characters, 0, characters.Count - 1))
+            //{
+            //    Console.WriteLine($"{item.Name}");
+            //}
 
-            foreach (var item in SortById(characters, 0, characters.Count - 1))
-            {
-                Console.WriteLine($"{item.Name} - {item.Id}");
-            }
+            //Console.WriteLine("\nby win rate");
 
-            Console.ReadKey();
+            //foreach (var item in SortByWinRatio(characters, 0, characters.Count - 1))
+            //{
+            //    Console.WriteLine($"{item.Name} - {item.GetWinRate()} win rate");
+            //}
+
+            //Console.WriteLine("\n by id");
+
+            //foreach (var item in SortById(characters, 0, characters.Count - 1))
+            //{
+            //    Console.WriteLine($"{item.Name} - {item.Id}");
+            //}
 
             //Console.ReadKey();
 
@@ -303,6 +302,10 @@ namespace ConsoleApp3
             //Console.ReadKey();
 
             #endregion
+
+            Console.WriteLine(Huinya.GetDegreeOfTwo(8));
+
+            Console.ReadKey();
 
         }
     }
