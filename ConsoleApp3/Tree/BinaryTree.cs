@@ -3,83 +3,153 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConsoleApp3.Tree
 {
-    public class BinaryTree<T>
+    public class BinaryTree
     {
-        public TreeNode<T> root;
+        internal Node Root { get; set; }
 
-        public BinaryTree(T value)
+        public BinaryTree(int value)
         {
-            root = new TreeNode<T>(value);
+            Root = new Node(value);
         }
-        public BinaryTree()
+        public void Add(int value)
         {
-            root = new TreeNode<T>();
-        }
+            Node before = null;
+            Node after = Root;
 
-        public void Add(T value)
-        {
-            TreeNode<T> node = root;
-            TreeNode<T> nodeToAdd = new TreeNode<T>(value);
-            while (node.Left != null || node.Right != null)
+            while (after != null)
             {
-                if (node.Left == null)
-                {
-                    node = node.Left;
-                    break;
-                }
-                if (node.Right == null)
-                {
-                    node = node.Right;
-                    break;
-                }
+                before = after;
+                if (value < after.Data)
+                    after = after.LeftNode;
+                else if (value > after.Data)
+                    after = after.RightNode;
+                else
+                    return;
             }
 
-            if (node.Left == null)
-            {
-                node.Left = nodeToAdd;
-            }
+            Node newNode = new Node(value);
 
-            if (node.Right == null)
+            if (Root == null)
+                Root = newNode;
+            else
             {
-                node.Right = nodeToAdd;
+                if (before != null && value < before.Data)
+                    before.LeftNode = newNode;
+                else if (before != null) before.RightNode = newNode;
             }
-
         }
 
-        public void Print(TreeNode<T> node)
+        public void AddRange(params int[] values)
         {
-            if (node == null)
+            foreach (var value in values)
             {
-                return;
+                Add(value);
             }
-
-            Print(node.Left);
-            Console.WriteLine(node.Value);
-            Print(node.Right);
         }
 
-        public TreeNode<T> this[int index]
+        public Node Find(int value) => Find(value, Root);
+
+        public void Remove(int value) => Root = Remove(Root, value);
+
+        private Node Remove(Node parent, int key)
+        {
+            if (parent == null) return parent ?? throw new ArgumentNullException(nameof(parent));
+
+            if (key < parent.Data)
+                parent.LeftNode = Remove(parent.LeftNode, key);
+            else if (key > parent.Data)
+                parent.RightNode = Remove(parent.RightNode, key);
+
+            else
+            {
+                if (parent.LeftNode == null)
+                    return parent.RightNode;
+                if (parent.RightNode == null)
+                    return parent.LeftNode;
+
+                parent.Data = MinValue(parent.RightNode);
+
+                parent.RightNode = Remove(parent.RightNode, parent.Data);
+            }
+
+            return parent;
+        }
+
+        private int MinValue(Node node)
+        {
+            int minv = node.Data;
+
+            while (node.LeftNode != null)
+            {
+                minv = node.LeftNode.Data;
+                node = node.LeftNode;
+            }
+
+            return minv;
+        }
+        private Node Find(int value, Node parent) =>
+        (parent == null
+                ? null
+                : value == parent.Data
+                    ? parent
+                    : Find(value, value < parent.Data
+                        ? parent.LeftNode
+                        : parent.RightNode))
+            ?? throw new InvalidOperationException();
+
+        public int GetTreeDepth() => GetTreeDepth(Root);
+
+        private int GetTreeDepth(Node parent) => parent == null
+            ? 0
+            : Math.Max(GetTreeDepth(parent.LeftNode), GetTreeDepth(parent.RightNode)) + 1;
+
+        public Node this[int index]
         {
             get
             {
-                TreeNode<T> result = root;
-                for (int i = 0; i < index; i++)
+                Node node = Root;
+                int i = 0;
+                while (node != null)
                 {
-                    if (result.Left != null)
-                    {
-                        result = root.Left;
-                    }
-                    else if (result.Right != null)
-                    {
-                        result = root.Right;
-                    }
+                    if (i == index)
+                        return node;
+                    if (index < i)
+                        node = node.LeftNode;
+                    else
+                        node = node.RightNode;
+                    i++;
                 }
-                return result;
+
+                throw new IndexOutOfRangeException();
             }
         }
+        
+        public void TraversePreOrder(Node parent)
+        {
+            if (parent == null) return;
+            Console.Write(parent.Data + " ");
+            TraversePreOrder(parent.LeftNode);
+            TraversePreOrder(parent.RightNode);
+        }
 
+        public void TraverseInOrder(Node parent)
+        {
+            if (parent == null) return;
+            TraverseInOrder(parent.LeftNode);
+            Console.Write(parent.Data + " ");
+            TraverseInOrder(parent.RightNode);
+        }
+
+        public void TraversePostOrder(Node parent)
+        {
+            if (parent == null) return;
+            TraversePostOrder(parent.LeftNode);
+            TraversePostOrder(parent.RightNode);
+            Console.Write(parent.Data + " ");
+        }
     }
 }

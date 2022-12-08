@@ -60,7 +60,7 @@
     <Compile Include="Sequence\Sequence.cs" />
     <Compile Include="Sequence\Set.cs" />
     <Compile Include="Tree\BinaryTree.cs" />
-    <Compile Include="Tree\TreeNode.cs" />
+    <Compile Include="Tree\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -294,18 +294,19 @@ namespace ConsoleApp3
 
             #region Tree
 
-            //BinaryTree<string> tree = new BinaryTree<string>();
-            //tree.Add("bebra");
-            //tree.Add("brusko");
-            //tree.Print(tree.root);
+            var tree = new BinaryTree(10);
+            tree.Add(20);
+            tree.Add(30);
+            Console.WriteLine($"{tree[0].Data} {tree[2].Data}");
 
-            //Console.ReadKey();
+            var tree2 = new BinaryTree(17);
+            tree2.AddRange(17, 6, 5, 20, 19, 18, 11, 14, 12, 13, 2, 4, 10);
+            tree2.TraverseInOrder(tree2.Root);
+
+            Console.ReadKey();
 
             #endregion
 
-            Console.WriteLine(Huinya.GetDegreeOfTwo(8));
-
-            Console.ReadKey();
 
         }
     }

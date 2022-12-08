@@ -52,6 +52,17 @@ namespace ConsoleApp3._10fns
             return sum + Increment(ls[0]) * Increment(ls[1]) + Increment(sum) * Increment(sum);
         }
 
+        public static bool Exists(int[] ls, int n) //o(n)
+        {
+            foreach (var i in ls)
+            {
+                if (i == n)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static int SumAndMultiply(params int[] ls) //o(2n)
         {
@@ -95,5 +106,7 @@ namespace ConsoleApp3._10fns
             }
             return result;
         }
+
+
     }
 }
